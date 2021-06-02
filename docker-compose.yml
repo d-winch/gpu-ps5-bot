@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  gputime:
+    image: dwinch/gputime
+    build:
+      context: .
+      dockerfile: ./Dockerfile
