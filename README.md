@@ -1,7 +1,7 @@
 # gpu-ps5-bot for Amazon UK
 A bot to listen to Twitter accounts for UK stock drops and then purchase products
 
-I wrote this to get a GPU without having to try to beat scalpers.
+I wrote this to get a GPU without having to try to beat scalpers to a drop.
 
 Loads Twitter credentials and Amazon log in data from .env file.
 
