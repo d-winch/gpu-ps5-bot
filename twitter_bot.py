@@ -39,7 +39,7 @@ ACCESS_TOKEN_SECRET = os.environ.get("ACCESS_TOKEN_SECRET")
 user_list = ["3373551", "1314575666130694144", "1320083775934631937"]
 
 
-class MyStreamListener(tweepy.StreamListener):
+class TweetStreamListener(tweepy.StreamListener):
 
     max_additional_cost = 50
 
@@ -159,25 +159,27 @@ class MyStreamListener(tweepy.StreamListener):
         sys.exit("Purchase appears successful. Check Amazon account.")
 
 
-auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+if __name__ == "__main__":
+
+    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
 
-stream_listener = MyStreamListener()
-stream = tweepy.Stream(auth=auth,
-                       listener=stream_listener,
-                       tweet_mode="extended",
-                       include_rts=True)
-stream.api.wait_on_rate_limit = True
-stream.api.wait_on_rate_limit_notify = True
+    stream_listener = TweetStreamListener()
+    stream = tweepy.Stream(auth=auth,
+                        listener=stream_listener,
+                        tweet_mode="extended",
+                        include_rts=True)
+    stream.api.wait_on_rate_limit = True
+    stream.api.wait_on_rate_limit_notify = True
 
 
-while True:
-    if stream.running == False:
-        try:
-            stream.filter(follow=user_list,
-                        is_async=True,
-                        stall_warnings=True)
-        except (ProtocolError, AttributeError) as e:
-            logger.error(f"ENCOUNTERED ERROR: {e}")
-            continue
+    while True:
+        if stream.running == False:
+            try:
+                stream.filter(follow=user_list,
+                            is_async=True,
+                            stall_warnings=True)
+            except (ProtocolError, AttributeError) as e:
+                logger.error(f"ENCOUNTERED ERROR: {e}")
+                continue
